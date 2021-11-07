@@ -17,7 +17,7 @@ public class UserService {
                 .alias("TheCryptoKnight")
                 .build());
         users.put("2", UserDto.builder()
-                .id("2")
+                .id("0x2336626b66449798d8041e26a3da5f1197e26c8c")
                 .build());
     }
 

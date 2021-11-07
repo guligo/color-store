@@ -34,14 +34,30 @@ class App extends React.Component {
      .then(res => {
        return res.json();
      })
-     .then(colors => this.setState({colors: colors, publicKey: publicKey}))
+     .then(colors => this.setState({colors: colors, publicKey: publicKey[0]}))
      .catch(console.log)
   }
+
+  renderActionButtons(color) {
+      if (color.owner.id === this.state.publicKey) {
+        return (
+          <TableCell align="center">
+            <Button variant="contained">View</Button>
+            <Button variant="contained">Sell</Button>
+          </TableCell>
+        );
+      }
+      return (
+        <TableCell align="center">
+          <Button variant="contained">Buy</Button>
+        </TableCell>
+      )
+  };
 
   render() {
     return (
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <AppBar position="static">
+        <AppBar position="static" sx={{ textAlighn: 'center' }}>
           <Toolbar variant="dense">
             <Typography variant="h6" color="inherit" component="div">
               Welcome to the Color Store user { this.state.publicKey }!
@@ -60,21 +76,19 @@ class App extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.colors.map((color) => (
+              { this.state.colors.map((color) => (
                 <TableRow
                   hover
                   key={color.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell align="center">{color.id}</TableCell>
-                  <TableCell align="center">{color.name}</TableCell>
+                  <TableCell align="center">{ color.id }</TableCell>
+                  <TableCell align="center">{ color.name }</TableCell>
                   <TableCell align="center">
                     <CircleIcon sx={{ color: color.rgb }} />
                   </TableCell>
-                  <TableCell align="center">{color.owner.alias ? color.owner.alias : color.owner.id}</TableCell>
-                  <TableCell align="center">
-                    <Button variant="contained">View</Button>
-                  </TableCell>
+                  <TableCell align="center">{ color.owner.alias ? color.owner.alias : color.owner.id }</TableCell>
+                  { this.renderActionButtons(color) }
                 </TableRow>
               ))}
             </TableBody>
