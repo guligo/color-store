@@ -16,4 +16,7 @@ public class ColorDto {
     @lombok.NonNull
     private String rgb;
 
+    @lombok.NonNull
+    private UserDto owner;
+
 }

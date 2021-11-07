@@ -27,19 +27,15 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.addEventListener("load", async () => {
-      var publicKey = await window.ethereum.request({method: 'eth_accounts'});
-      fetch('http://localhost:8080/colors')
-        .then(res => {
-          return res.json();
-        })
-        .then(colors => this.setState({
-          publicKey: publicKey,
-          colors: colors
-        }))
-        .catch(console.log)
-    });
+  async componentDidMount() {
+    var publicKey = await window.ethereum.request({method: 'eth_accounts'});
+
+    fetch('http://localhost:8080/colors')
+     .then(res => {
+       return res.json();
+     })
+     .then(colors => this.setState({colors: colors, publicKey: publicKey}))
+     .catch(console.log)
   }
 
   render() {
@@ -75,7 +71,7 @@ class App extends React.Component {
                   <TableCell align="center">
                     <CircleIcon sx={{ color: color.rgb }} />
                   </TableCell>
-                  <TableCell align="center">&nbsp;</TableCell>
+                  <TableCell align="center">{color.owner.alias ? color.owner.alias : color.owner.id}</TableCell>
                   <TableCell align="center">
                     <Button variant="contained">View</Button>
                   </TableCell>
