@@ -1,3 +1,6 @@
 spring.devtools.restart:
   enabled: false
   exclude: color-store-fe/**
+
+contract:
+  address: "0x55f2D9b5448CFa6Bd4Dc84160c23Dd7b8d94df2E"

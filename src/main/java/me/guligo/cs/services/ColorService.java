@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import me.guligo.cs.dtos.ColorDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -22,8 +23,14 @@ public class ColorService {
 
     private final Map<String, ColorDto> colors;
 
+    private final String contractAddress;
+
     @Autowired
-    public ColorService(final UserService userService) {
+    public ColorService(
+            @Value("${contract.address}") final String contractAddress,
+            final UserService userService) {
+        this.contractAddress = contractAddress;
+
         colors = new HashMap<>();
         colors.put("1", ColorDto.builder()
                 .id("1")
@@ -52,10 +59,10 @@ public class ColorService {
             final String clientVersion = web3ClientVersion.getWeb3ClientVersion();
             System.out.println(clientVersion);
 
-            final EthGetTransactionCount ethGetTransactionCount = web3.ethGetTransactionCount("0xb412a3935B6a8fd37824DbB6D01B677cc3854080", DefaultBlockParameterName.LATEST).send();
+            final EthGetTransactionCount ethGetTransactionCount = web3.ethGetTransactionCount(contractAddress, DefaultBlockParameterName.LATEST).send();
             System.out.println(ethGetTransactionCount.getTransactionCount());
 
-            final Credentials credentials = Credentials.create("fa633c1dc028945639aefc81172cd2061dc6a28b90f3fa7b9091b59585909b20");
+            final Credentials credentials = Credentials.create("361c702490e640fda88ec822aa1cf2868325f5d289a3c7fcedc9e83543db98a4");
             final TransactionReceipt transactionReceipt = Transfer.sendFunds(
                     web3, credentials, "0xeF9cBff74240AF0b4457DD917b610AFb7A9d2A63",
                     BigDecimal.valueOf(1.0), Convert.Unit.ETHER)
