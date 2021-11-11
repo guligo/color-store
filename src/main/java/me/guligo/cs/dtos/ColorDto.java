@@ -7,10 +7,6 @@ import lombok.Data;
 @Builder
 public class ColorDto {
 
-    @lombok.NonNull
-    private String id;
-
-    @lombok.NonNull
     private String name;
 
     @lombok.NonNull

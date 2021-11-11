@@ -3,36 +3,33 @@ package me.guligo.cs.services;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import me.guligo.cs.dtos.ColorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class ColorService {
 
-    private final Map<String, ColorDto> colors;
+    private final Map<Integer, ColorDto> colors;
+
+    private final UserService userService;
 
     @Autowired
     public ColorService(final UserService userService) {
-        colors = new HashMap<>();
-        colors.put("1", ColorDto.builder()
-                .id("1")
-                .name("Mimosa")
-                .rgb("#f0c05a")
-                .owner(userService.getUser("1"))
-                .build());
-        colors.put("2", ColorDto.builder()
-                .id("2")
-                .name("Greenery")
-                .rgb("#88b04b")
-                .owner(userService.getUser("1"))
-                .build());
-        colors.put("3", ColorDto.builder()
-                .id("3")
-                .name("Tangerine Tango")
-                .rgb("#dd4124")
-                .owner(userService.getUser("2"))
-                .build());
+        this.colors = new HashMap<>();
+        this.userService = userService;
+    }
+
+    public void addColor(final int tokenId, final String owner) {
+        final ColorDto color = ColorDto.builder()
+                .rgb("#" + Integer.toHexString(tokenId))
+                .owner(userService.getUser(owner))
+                .build();
+
+        log.info(color.toString());
+        colors.put(tokenId, color);
     }
 
     public Collection<ColorDto> getColors() {

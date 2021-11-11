@@ -12,17 +12,14 @@ public class UserService {
 
     public UserService() {
         users = new HashMap<>();
-        users.put("1", UserDto.builder()
-                .id("1")
+        users.put("0xef9cbff74240af0b4457dd917b610afb7a9d2a63", UserDto.builder()
+                .id("0xef9cbff74240af0b4457dd917b610afb7a9d2a63")
                 .alias("TheCryptoKnight")
-                .build());
-        users.put("2", UserDto.builder()
-                .id("0x2336626b66449798d8041e26a3da5f1197e26c8c")
                 .build());
     }
 
     public UserDto getUser(final String userId) {
-        return users.get(userId);
+        return users.getOrDefault(userId, UserDto.builder().id(userId).build());
     }
 
 }

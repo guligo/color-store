@@ -68,7 +68,6 @@ class App extends React.Component {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">ID</TableCell>
                 <TableCell align="center">Name</TableCell>
                 <TableCell align="center">RGB</TableCell>
                 <TableCell align="center">Owner</TableCell>
@@ -82,7 +81,6 @@ class App extends React.Component {
                   key={color.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell align="center">{ color.id }</TableCell>
                   <TableCell align="center">{ color.name }</TableCell>
                   <TableCell align="center">
                     <CircleIcon sx={{ color: color.rgb }} />

@@ -5,5 +5,4 @@ spring.devtools.restart:
 blockchain:
   node.address: "http://127.0.0.1:8545" # address of Ganache personal blockchain; the term "node" provides more flexibility in case this system moves to live ETH blockchain
   contracts:
-    deployer.address: "0x215D629d5395e73517B1287c1e623D8dB72360d3" # "account" output by truffle migrate command
-    color-coin.address: "0xd6CC6e374FEA24a94Cf31B499eb323805a8aE383" # "contract address" output by truffle migrate command
+    color-coin.address: "0x88fedaA90326d75aE714120522fCA6C9bf1A3472" # "contract address" output by truffle migrate command
