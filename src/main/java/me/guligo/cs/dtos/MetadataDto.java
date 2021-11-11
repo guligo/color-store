@@ -5,15 +5,15 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ColorDto {
+public class MetadataDto {
 
     @lombok.NonNull
-    private MetadataDto metadata;
+    private String name;
 
     @lombok.NonNull
-    private String rgb;
+    private String description;
 
     @lombok.NonNull
-    private UserDto owner;
+    private String image;
 
 }
