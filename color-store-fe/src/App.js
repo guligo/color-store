@@ -81,7 +81,7 @@ class App extends React.Component {
                   key={color.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell align="center">{ color.name }</TableCell>
+                  <TableCell align="center">{ color.metadata.name }</TableCell>
                   <TableCell align="center">
                     <CircleIcon sx={{ color: color.rgb }} />
                   </TableCell>

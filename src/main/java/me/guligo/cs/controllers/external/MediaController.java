@@ -1,4 +1,4 @@
-package me.guligo.cs.controllers;
+package me.guligo.cs.controllers.external;
 
 import java.io.IOException;
 import org.apache.commons.io.IOUtils;
