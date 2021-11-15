@@ -26,7 +26,7 @@ public class ColorController {
     }
 
     @GetMapping("/colors/{colorId}")
-    public ColorDto getColor(@PathVariable final String colorId) {
+    public ColorDto getColor(@PathVariable final int colorId) {
         return colorService.getColor(colorId);
     }
 

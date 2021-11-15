@@ -34,7 +34,6 @@ public class ColorService {
                 .owner(userService.getUser(owner))
                 .build();
 
-        log.info(color.toString());
         colors.put(tokenId, color);
     }
 
@@ -42,7 +41,7 @@ public class ColorService {
         return colors.values();
     }
 
-    public ColorDto getColor(final String colorId) {
+    public ColorDto getColor(final int colorId) {
         return colors.get(colorId);
     }
 
