@@ -8,6 +8,7 @@ import java.awt.image.RenderedImage;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import me.guligo.cs.services.ColorService;
+import me.guligo.cs.utils.MiscUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +35,7 @@ public class MediaService {
                     graph.fillRect(0, 600, 600, 800);
                     graph.setColor(Color.BLACK);
                     graph.setFont(new Font("Courier New", Font.PLAIN, 45));
-                    graph.drawString(color.getRgb().toUpperCase(), 200, 710);
+                    graph.drawString(MiscUtil.getColorCode(tokenId).toUpperCase(), 200, 710);
                     graph.dispose();
                     return image;
                 });

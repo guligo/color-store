@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import me.guligo.cs.dtos.ColorDto;
-import me.guligo.cs.utils.MiscUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,22 +14,17 @@ public class ColorService {
 
     private final Map<Integer, ColorDto> colors;
 
-    private final MetadataService metadataService;
-
     private final UserService userService;
 
     @Autowired
-    public ColorService(final MetadataService metadataService,
-                        final UserService userService) {
+    public ColorService(final UserService userService) {
         this.colors = new HashMap<>();
-        this.metadataService = metadataService;
         this.userService = userService;
     }
 
     public void addColor(final int tokenId, final String owner) {
         final ColorDto color = ColorDto.builder()
-                .metadata(metadataService.getMetadata(tokenId))
-                .rgb(MiscUtil.getColorCode(tokenId))
+                .tokenId(tokenId)
                 .owner(userService.getUser(owner))
                 .build();
 

@@ -1,7 +1,7 @@
-package me.guligo.cs.controllers;
+package me.guligo.cs.controllers.external;
 
-import me.guligo.cs.dtos.MetadataDto;
-import me.guligo.cs.services.MetadataService;
+import me.guligo.cs.dtos.external.MetadataDto;
+import me.guligo.cs.services.external.MetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

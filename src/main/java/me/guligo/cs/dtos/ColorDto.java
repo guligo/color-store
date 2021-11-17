@@ -8,10 +8,7 @@ import lombok.Data;
 public class ColorDto {
 
     @lombok.NonNull
-    private MetadataDto metadata;
-
-    @lombok.NonNull
-    private String rgb;
+    private int tokenId;
 
     @lombok.NonNull
     private UserDto owner;

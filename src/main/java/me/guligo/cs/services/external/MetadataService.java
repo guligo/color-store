@@ -1,6 +1,6 @@
-package me.guligo.cs.services;
+package me.guligo.cs.services.external;
 
-import me.guligo.cs.dtos.MetadataDto;
+import me.guligo.cs.dtos.external.MetadataDto;
 import me.guligo.cs.utils.MiscUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

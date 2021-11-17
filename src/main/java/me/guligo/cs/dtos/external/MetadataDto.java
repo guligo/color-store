@@ -1,4 +1,4 @@
-package me.guligo.cs.dtos;
+package me.guligo.cs.dtos.external;
 
 import lombok.Builder;
 import lombok.Data;

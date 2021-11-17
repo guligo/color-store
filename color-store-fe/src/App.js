@@ -15,6 +15,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Chip from '@mui/material/Chip';
+import Tooltip from '@mui/material/Tooltip';
+import ColorStore from "./contracts/ColorStore.json";
+import ColorCoin from "./contracts/ColorCoin.json";
 import Web3 from 'web3';
 
 class App extends React.Component {
@@ -36,6 +40,43 @@ class App extends React.Component {
      })
      .then(colors => this.setState({colors: colors, publicKey: publicKey[0]}))
      .catch(console.log)
+
+    try {
+      this.web3 = new Web3(window.ethereum);
+
+      this.accounts = await this.web3.eth.getAccounts();
+
+      // Get the contract instance
+      this.networkId = await this.web3.eth.net.getId();
+
+      this.colorStoreContractInstance = new this.web3.eth.Contract(
+        ColorStore.abi,
+        ColorStore.networks[this.networkId] && ColorStore.networks[this.networkId].address,
+      );
+
+      this.colorCoinContractInstance = new this.web3.eth.Contract(
+        ColorCoin.abi,
+        ColorCoin.networks[this.networkId] && ColorCoin.networks[this.networkId].address,
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  handleBuyToken = async (tokenId) => {
+    console.log(`Buying token with ID ${tokenId}`);
+
+    await this.colorStoreContractInstance.methods.buyToken(tokenId).send({from: this.accounts[0], value: this.web3.utils.toWei("100000000000", "wei")});
+  }
+
+  handleSellToken = async (tokenId) => {
+    console.log(`Selling token with ID ${tokenId}`);
+
+    let operationApproved = await this.colorCoinContractInstance.methods.isApprovedForAll(this.state.publicKey, ColorStore.networks[this.networkId].address).call();
+    if (!operationApproved) {
+      await this.colorCoinContractInstance.methods.setApprovalForAll(ColorStore.networks[this.networkId].address, true).send({from: this.accounts[0]});
+    }
+    await this.colorStoreContractInstance.methods.sellToken(tokenId).send({from: this.accounts[0]});
   }
 
   renderActionButtons(color) {
@@ -43,13 +84,13 @@ class App extends React.Component {
         return (
           <TableCell align="center">
             <Button variant="contained">View</Button>
-            <Button variant="contained">Sell</Button>
+            <Button variant="contained" onClick={_ => this.handleSellToken(color.tokenId)}>Sell</Button>
           </TableCell>
         );
       }
       return (
         <TableCell align="center">
-          <Button variant="contained">Buy</Button>
+          <Button variant="contained" onClick={_ => this.handleBuyToken(color.tokenId)}>Buy</Button>
         </TableCell>
       )
   };
@@ -64,12 +105,11 @@ class App extends React.Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer sx={{ maxHeight: '100%' }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">Name</TableCell>
-                <TableCell align="center">RGB</TableCell>
+                <TableCell align="center">Color</TableCell>
                 <TableCell align="center">Owner</TableCell>
                 <TableCell align="center">Action</TableCell>
               </TableRow>
@@ -81,9 +121,10 @@ class App extends React.Component {
                   key={color.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell align="center">{ color.metadata.name }</TableCell>
                   <TableCell align="center">
-                    <CircleIcon sx={{ color: color.rgb }} />
+                    <Tooltip title={ '#' + color.tokenId.toString(16) }>
+                      <CircleIcon sx={{ color: '#' + color.tokenId.toString(16) }} />
+                    </Tooltip>
                   </TableCell>
                   <TableCell align="center">{ color.owner.alias ? color.owner.alias : color.owner.id }</TableCell>
                   { this.renderActionButtons(color) }
