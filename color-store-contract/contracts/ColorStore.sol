@@ -21,6 +21,8 @@ contract ColorStore {
         uint256 amountInWei = msg.value;
         if (amountInWei >= _rateInWei) {
             _token.transferFrom(address(this), msg.sender, _tokenId);
+        } else {
+            revert("Not enough funds provided to buy a token");
         }
     }
 

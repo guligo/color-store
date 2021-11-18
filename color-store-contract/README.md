@@ -2,6 +2,8 @@
 
 ## Commands
 
+`truffle test`
+
 `truffle migrate --reset --network test`
 
 ## Links
