@@ -6,13 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.util.Optional;
-import lombok.extern.slf4j.Slf4j;
 import me.guligo.cs.services.ColorService;
 import me.guligo.cs.utils.MiscUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 public class MediaService {
 
