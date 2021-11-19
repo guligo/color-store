@@ -34,6 +34,7 @@ public class MediaService {
                     graph.setColor(Color.BLACK);
                     graph.setFont(new Font("Courier New", Font.PLAIN, 45));
                     graph.drawString(MiscUtil.getColorCode(tokenId).toUpperCase(), 200, 710);
+                    graph.drawRect(0, 0, 599, 799);
                     graph.dispose();
                     return image;
                 });

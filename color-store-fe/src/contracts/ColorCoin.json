@@ -15058,6 +15058,25 @@
           "name": "ApprovalForAll",
           "type": "event"
         },
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
         "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef": {
           "anonymous": false,
           "inputs": [
@@ -15082,34 +15101,15 @@
           ],
           "name": "Transfer",
           "type": "event"
-        },
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event"
         }
       },
       "links": {},
-      "address": "0x7811a336436B0D08021D189704937Fd23656b509",
-      "transactionHash": "0xc69de1986f80a0154cc47a2ebd61a5ea2a51e01ea27e66f4309310f5c945d013"
+      "address": "0xf8074e79afdbd59Cb4fba0a34DcC527C95d734c9",
+      "transactionHash": "0x61230a7667a4c2bda6e3c6be742695439c90ef4ad0764928d9ca49759bd70e7e"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-17T22:39:52.410Z",
+  "updatedAt": "2021-11-19T20:16:43.407Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

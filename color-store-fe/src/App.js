@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Chip from '@mui/material/Chip';
 import Tooltip from '@mui/material/Tooltip';
+import AssetDialog from "./AssetDialog"
 import ColorStore from "./contracts/ColorStore.json";
 import ColorCoin from "./contracts/ColorCoin.json";
 import Web3 from 'web3';
@@ -28,6 +29,8 @@ class App extends React.Component {
     this.state = {
       publicKey: null,
       colors: [],
+      selectedColor: null,
+      openAssetDialog: false
     };
   }
 
@@ -79,11 +82,21 @@ class App extends React.Component {
     await this.colorStoreContractInstance.methods.sellToken(tokenId).send({from: this.accounts[0]});
   }
 
+  handleViewToken = async (color) => {
+    this.setState({
+      openAssetDialog: true,
+      selectedColor: color
+    });
+    console.log(this.state);
+  }
+
   renderActionButtons(color) {
       if (color.owner.id === this.state.publicKey) {
         return (
           <TableCell align="center">
-            <Button variant="contained">View</Button>
+            <Button variant="contained" onClick={_ => this.handleViewToken(color)}>
+              View
+            </Button>
             <Button variant="contained" onClick={_ => this.handleSellToken(color.tokenId)}>Sell</Button>
           </TableCell>
         );
@@ -101,10 +114,11 @@ class App extends React.Component {
         <AppBar position="static" sx={{ textAlighn: 'center' }}>
           <Toolbar variant="dense">
             <Typography variant="h6" color="inherit" component="div">
-              Welcome to the Color Store user { this.state.publicKey }!
+              Welcome to the Color Store user { this.state.openAssetDialog ? "Foo" : "Bar" }!
             </Typography>
           </Toolbar>
         </AppBar>
+        <AssetDialog open={this.state.openAssetDialog} data={this.state.selectedColor} onClose={_ => this.setState({openAssetDialog: false})} />
         <TableContainer sx={{ maxHeight: '100%' }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>

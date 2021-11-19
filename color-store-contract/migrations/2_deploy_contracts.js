@@ -1,14 +1,24 @@
-const ColorCoin = artifacts.require("ColorCoin");
-const ColorStore = artifacts.require("ColorStore");
+const fs = require('fs').promises;
+
+const ColorCoin = artifacts.require('ColorCoin');
+const ColorStore = artifacts.require('ColorStore');
 
 module.exports = async function(deployer) {
+  console.log('Deploying contracts');
   await deployer.deploy(ColorCoin);
   await deployer.deploy(ColorStore, ColorCoin.address, 100000000000);
 
-  let instance = await ColorCoin.deployed();
+  console.log('Creating application-dev.yaml file');
+  await fs.writeFile(
+    '../src/main/resources/application-dev.yaml',
+    `blockchain.contracts.color-coin.address: "${ColorCoin.address}"\n` +
+    `blockchain.contracts.color-store.address: "${ColorStore.address}"\n`
+  );
 
   // this will just modify mapping of balances in ERC721 token, it does not transfer
   // anything to ColorStore.address
+  console.log('Creating tokens');
+  let instance = await ColorCoin.deployed();
   await instance.createColor(ColorStore.address, 0x9BB7D4);
   await instance.createColor(ColorStore.address, 0xC74375);
   await instance.createColor(ColorStore.address, 0xBF1932);
