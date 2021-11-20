@@ -43,4 +43,27 @@ contract('ColorStore', (accounts) => {
     assert.equal(currAmountOwnedByAccount, 0);
   });
 
+  it('should not be possible to buy random NFT if contract owns no coins', async () => {
+    const colorStoreInstance = await ColorStore.deployed();
+    const colorCoinInstance = await ColorCoin.deployed();
+
+    const initAmountOwnedByStore = await colorCoinInstance.balanceOf.call(ColorStore.address);
+    for (var i = 1; i <= initAmountOwnedByStore; i++) {
+        await colorStoreInstance.sendTransaction({from: account, to: ColorStore.address, value: 100000000000});
+    }
+    const currAmountOwnedByStore = await colorCoinInstance.balanceOf.call(ColorStore.address);
+    const currAmountOwnedByAccount = await colorCoinInstance.balanceOf.call(account);
+
+    assert.equal(currAmountOwnedByStore, 0);
+    assert.equal(currAmountOwnedByAccount.toNumber(), initAmountOwnedByStore.toNumber());
+
+    try {
+      await colorStoreInstance.sendTransaction({from: account, to: ColorStore.address, value: 100000000000});
+    } catch (err) {
+      assert.equal(err.reason, 'No tokens owned by this contract');
+      return;
+    }
+    assert.fail('Expected an exception!');
+  });
+
 });
