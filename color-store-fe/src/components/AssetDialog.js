@@ -3,24 +3,23 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
 export default function AssetDialog(props) {
 
   return (
     <Dialog
-      open={props.open}
-      onClose={props.onClose}
+      open={ props.open }
+      onClose={ props.onClose }
     >
-      <DialogContent>
-        <DialogContentText sx={{ textAlign: 'center' }}>
-          <img src={props.data?.metadata.image} style={{ width: 320 }} />
-          <p>{props.data?.metadata.description}</p>
+      <DialogContent sx={{ textAlign: 'center' }}>
+        <img src={ props.data?.metadata.image }  style={{ width: '50%' }} />
+        <DialogContentText sx={{ marginTop: '10px' }}>
+          { props.data?.metadata.description }
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.onClose}>Close</Button>
+        <Button onClick={ props.onClose }>Close</Button>
       </DialogActions>
     </Dialog>
   );

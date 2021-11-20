@@ -1,23 +1,9 @@
 import './App.css';
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import CircleIcon from '@mui/icons-material/Circle';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Chip from '@mui/material/Chip';
-import Tooltip from '@mui/material/Tooltip';
-import AssetDialog from "./AssetDialog"
+import MenuBar from "./components/MenuBar"
+import AssetList from "./components/AssetList"
+import AssetDialog from "./components/AssetDialog"
 import ColorStore from "./contracts/ColorStore.json";
 import ColorCoin from "./contracts/ColorCoin.json";
 import Web3 from 'web3';
@@ -29,8 +15,8 @@ class App extends React.Component {
     this.state = {
       publicKey: null,
       colors: [],
-      selectedColor: null,
-      openAssetDialog: false
+      assetDialogData: null,
+      assetDialogDisplayed: false
     };
   }
 
@@ -66,87 +52,50 @@ class App extends React.Component {
     }
   }
 
-  handleBuyToken = async (tokenId) => {
-    console.log(`Buying token with ID ${tokenId}`);
+  handleViewAsset = (asset) => {
+    this.setState({
+      assetDialogData: asset,
+      assetDialogDisplayed: true
+    });
+  };
 
-    await this.colorStoreContractInstance.methods.buyToken(tokenId).send({from: this.accounts[0], value: this.web3.utils.toWei("100000000000", "wei")});
-  }
+  handleBuyAsset = async (asset) => {
+    console.log(`Buying token with ID ${asset.tokenId}`);
 
-  handleSellToken = async (tokenId) => {
-    console.log(`Selling token with ID ${tokenId}`);
+    await this.colorStoreContractInstance.methods.buyToken(asset.tokenId).send({from: this.accounts[0], value: this.web3.utils.toWei("100000000000", "wei")});
+  };
+
+  handleSellAsset = async (asset) => {
+    console.log(`Selling token with ID ${asset.tokenId}`);
 
     let operationApproved = await this.colorCoinContractInstance.methods.isApprovedForAll(this.state.publicKey, ColorStore.networks[this.networkId].address).call();
     if (!operationApproved) {
       await this.colorCoinContractInstance.methods.setApprovalForAll(ColorStore.networks[this.networkId].address, true).send({from: this.accounts[0]});
     }
-    await this.colorStoreContractInstance.methods.sellToken(tokenId).send({from: this.accounts[0]});
-  }
-
-  handleViewToken = async (color) => {
-    this.setState({
-      openAssetDialog: true,
-      selectedColor: color
-    });
-    console.log(this.state);
-  }
-
-  renderActionButtons(color) {
-      if (color.owner.id === this.state.publicKey) {
-        return (
-          <TableCell align="center">
-            <Button variant="contained" onClick={_ => this.handleViewToken(color)}>
-              View
-            </Button>
-            <Button variant="contained" onClick={_ => this.handleSellToken(color.tokenId)}>Sell</Button>
-          </TableCell>
-        );
-      }
-      return (
-        <TableCell align="center">
-          <Button variant="contained" onClick={_ => this.handleBuyToken(color.tokenId)}>Buy</Button>
-        </TableCell>
-      )
+    await this.colorStoreContractInstance.methods.sellToken(asset.tokenId).send({from: this.accounts[0]});
   };
+
+  handleCloseAssetDialog = async () => {
+    this.setState({
+      assetDialogData: null,
+      assetDialogDisplayed: false
+    });
+  }
 
   render() {
     return (
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <AppBar position="static" sx={{ textAlighn: 'center' }}>
-          <Toolbar variant="dense">
-            <Typography variant="h6" color="inherit" component="div">
-              Welcome to the Color Store user { this.state.openAssetDialog ? "Foo" : "Bar" }!
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <AssetDialog open={this.state.openAssetDialog} data={this.state.selectedColor} onClose={_ => this.setState({openAssetDialog: false})} />
-        <TableContainer sx={{ maxHeight: '100%' }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Color</TableCell>
-                <TableCell align="center">Owner</TableCell>
-                <TableCell align="center">Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              { this.state.colors.map((color) => (
-                <TableRow
-                  hover
-                  key={color.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell align="center">
-                    <Tooltip title={ '#' + color.tokenId.toString(16) }>
-                      <CircleIcon sx={{ color: '#' + color.tokenId.toString(16) }} />
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell align="center">{ color.owner.alias ? color.owner.alias : color.owner.id }</TableCell>
-                  { this.renderActionButtons(color) }
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <MenuBar account={ this.state.publicKey } />
+        <AssetList
+          assets={ this.state.colors }
+          account={ this.state.publicKey }
+          onViewAsset={ this.handleViewAsset }
+          onBuyAsset={ this.handleBuyAsset }
+          onSellAsset={ this.handleSellAsset} />
+        <AssetDialog
+          open={ this.state.assetDialogDisplayed }
+          data={ this.state.assetDialogData }
+          onClose={ this.handleCloseAssetDialog } />
       </Paper>
     );
   };
