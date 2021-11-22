@@ -3,7 +3,7 @@ import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import MenuBar from "./components/MenuBar"
 import AssetList from "./components/AssetList"
-import AssetDialog from "./components/AssetDialog"
+import AssetDialog from "./components/dialogs/AssetDialog"
 import ColorStore from "./contracts/ColorStore.json";
 import ColorCoin from "./contracts/ColorCoin.json";
 import Web3 from 'web3';

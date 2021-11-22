@@ -22,23 +22,23 @@ public class BlockchainService {
 
     private final String nodeAddress;
 
-    private final String colorCoinContractAddress;
+    private ConfigService configService;
 
     private ColorService colorService;
 
     @Autowired
     public BlockchainService(
             @Value("${blockchain.node.address}") final String nodeAddress,
-            @Value("${blockchain.contracts.color-coin.address}") final String colorCoinContractAddress,
+            final ConfigService configService,
             final ColorService colorService) {
         this.nodeAddress = nodeAddress;
-        this.colorCoinContractAddress = colorCoinContractAddress;
+        this.configService = configService;
         this.colorService = colorService;
     }
 
     @PostConstruct
     public void connect() {
-        final EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST, colorCoinContractAddress)
+        final EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST, configService.getConfig().getColorCoinContractAddress())
                 .addSingleTopic(EventEncoder.encode(BlockchainUtil.TRANSFER_EVENT));
 
         final Web3j web3 = Web3j.build(new HttpService(nodeAddress));

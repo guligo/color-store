@@ -27,4 +27,8 @@ public class UserService {
         return users.getOrDefault(userId.toLowerCase(), UserDto.builder().id(userId).build());
     }
 
+    public void updateUser(final String userId, final UserDto user) {
+        users.put(userId.toLowerCase(), user);
+    }
+
 }

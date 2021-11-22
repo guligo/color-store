@@ -36,6 +36,9 @@ public class ColorService {
     }
 
     public Collection<ColorDto> getColors() {
+        for (final ColorDto color : colors.values()) {
+            color.setOwner(userService.getUser(color.getOwner().getId()));
+        }
         return colors.values();
     }
 

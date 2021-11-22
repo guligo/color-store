@@ -33,9 +33,9 @@ export default function AssetList(props) {
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
-            <TableCell align="center">Color</TableCell>
-            <TableCell align="center">Owner</TableCell>
-            <TableCell align="center">Action</TableCell>
+            <TableCell align="center" sx={{ width: '33%' }}>Color</TableCell>
+            <TableCell align="center" sx={{ width: '33%' }}>Owner</TableCell>
+            <TableCell align="center" sx={{ width: '33%' }}>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

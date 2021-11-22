@@ -13,7 +13,7 @@ export default function AssetDialog(props) {
       onClose={ props.onClose }
     >
       <DialogContent sx={{ textAlign: 'center' }}>
-        <img src={ props.data?.metadata.image }  style={{ width: '50%' }} />
+        <img src={ props.data?.metadata.image } style={{ width: '50%' }} />
         <DialogContentText sx={{ marginTop: '10px' }}>
           { props.data?.metadata.description }
         </DialogContentText>
@@ -23,5 +23,4 @@ export default function AssetDialog(props) {
       </DialogActions>
     </Dialog>
   );
-
 }
