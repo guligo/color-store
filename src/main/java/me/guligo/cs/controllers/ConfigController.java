@@ -17,7 +17,10 @@ public class ConfigController {
         this.configService = configService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "http://192.168.178.20:3000"
+    })
     @GetMapping("/config")
     public ConfigDto getConfig() {
         return configService.getConfig();

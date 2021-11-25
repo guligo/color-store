@@ -11,21 +11,29 @@ import Button from '@mui/material/Button';
 
 export default function AssetList(props) {
 
+  const renderOwner = (owner) => {
+    return owner.alias ? owner.alias : owner.id.substring(0, 5) + '...' + owner.id.substring(owner.id.length - 3, owner.id.length)
+  };
+
   const renderActionButtons = (asset) => {
     if (asset.owner.id === props.account) {
       return (
         <TableCell align="center">
-          <Button variant="contained" onClick={_ => props.onViewAsset(asset)}>View</Button>
-          <Button variant="contained" onClick={_ => props.onSellAsset(asset)} sx={{ marginLeft: '5px' }}>Sell</Button>
+          <Button variant="contained" onClick={_ => props.onViewAsset(asset)} sx={{ marginLeft: '5px', marginTop: '5px'}}>View</Button>
+          <Button variant="contained" onClick={_ => props.onSellAsset(asset)} sx={{ marginLeft: '5px', marginTop: '5px'}}>Sell</Button>
         </TableCell>
       );
+    } else if (asset.owner.alias === 'Color Store') {
+      return (
+        <TableCell align="center">
+          <Button variant="contained" onClick={_ => props.onBuyAsset(asset)}>Buy</Button>
+        </TableCell>
+      );
+    } else {
+      return (
+        <TableCell>&nbsp;</TableCell>
+      )
     }
-
-    return (
-      <TableCell align="center">
-        <Button variant="contained" onClick={_ => props.onBuyAsset(asset)}>Buy</Button>
-      </TableCell>
-    );
   };
 
   return (
@@ -50,9 +58,7 @@ export default function AssetList(props) {
                 <CircleIcon sx={{ color: '#' + asset.tokenId.toString(16) }} />
               </Tooltip>
             </TableCell>
-            <TableCell align="center">
-              { asset.owner.alias ? asset.owner.alias : asset.owner.id }
-            </TableCell>
+            <TableCell align="center">{ renderOwner(asset.owner) }</TableCell>
             { renderActionButtons(asset) }
           </TableRow>
         ))}

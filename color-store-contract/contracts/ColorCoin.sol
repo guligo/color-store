@@ -11,7 +11,7 @@ contract ColorCoin is ERC721, Ownable {
     constructor() ERC721("ColorCoin", "COL") {}
 
     function _baseURI() internal view virtual override returns (string memory) {
-        return "http://127.0.0.1:8080/meta/";
+        return "http://192.168.178.20:8080/meta/";
     }
 
     function createColor(address to, uint256 tokenId) onlyOwner public {

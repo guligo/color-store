@@ -7,6 +7,10 @@ import Button from '@mui/material/Button';
 
 export default function AssetDialog(props) {
 
+  const copyTokenId = async () => {
+    await navigator.clipboard.writeText(props.data?.tokenId);
+  };
+
   return (
     <Dialog
       open={ props.open }

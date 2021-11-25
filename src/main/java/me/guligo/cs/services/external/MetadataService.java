@@ -20,9 +20,9 @@ public class MetadataService {
         final String colorCode = MiscUtil.getColorCode(tokenId);
 
         return MetadataDto.builder()
-                .name("The " + colorCode.toUpperCase())
-                .description("Proud owner of this color with code " + colorCode.toUpperCase() + " has something truly amazing in his hands!")
-                .image(mediaUrl + tokenId)
+                .name("The Color " + colorCode.toUpperCase())
+                .description("Proud owner of this color with code " + colorCode.toUpperCase() + " has something truly amazing in his or her hands! (S/N: " + tokenId + ")")
+                .image(mediaUrl + tokenId + ".png")
                 .build();
     }
 

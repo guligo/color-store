@@ -5,6 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import QRCode from 'qrcode.react';
 
 export default function AboutDialog(props) {
 
@@ -13,7 +14,7 @@ export default function AboutDialog(props) {
   const [colorStoreContractAddress, setColorStoreContractAddress] = React.useState(null);
 
   React.useEffect(() => {
-    fetch('http://localhost:8080/config')
+    fetch('http://192.168.178.20:8080/config')
       .then(res => {
         return res.json();
       })
@@ -31,7 +32,7 @@ export default function AboutDialog(props) {
       fullWidth
       maxWidth="sm"
     >
-      <DialogContent>
+      <DialogContent sx={{ textAlign: 'center' }} >
         <TextField
           disabled
           id="outlined-basic"
@@ -45,6 +46,7 @@ export default function AboutDialog(props) {
           defaultValue={ colorStoreContractAddress }
           sx={{ marginTop: '15px' }}
           fullWidth />
+        <QRCode value={ colorStoreContractAddress } style={{ marginTop: '10px' }} />
       </DialogContent>
       <DialogActions>
         <Button onClick={ props.onClose }>Close</Button>

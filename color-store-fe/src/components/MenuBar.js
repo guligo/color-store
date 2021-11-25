@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountDialog from './dialogs/AccountDialog';
 import AboutDialog from './dialogs/AboutDialog';
+import DappHelper from '../helpers/DappHelper'
 
 export default function MenuBar(props) {
 
@@ -23,6 +24,11 @@ export default function MenuBar(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleConnectMetaMask = async () => {
+    await DappHelper.connectMetaMask();
+    handleClose();
   };
 
   const handleOpenAccountDialog = () => {
@@ -70,8 +76,9 @@ export default function MenuBar(props) {
           open={ Boolean(anchorEl) }
           onClose={ handleClose }
         >
+          <MenuItem onClick={ handleConnectMetaMask }>Connect MetaMask</MenuItem>
           <MenuItem onClick={ handleOpenAccountDialog }>My Account</MenuItem>
-          <MenuItem onClick={ handleOpenAboutDialog }>About</MenuItem>
+          <MenuItem onClick={ handleOpenAboutDialog }>About Color Store</MenuItem>
         </Menu>
       </Toolbar>
       <AccountDialog open={ accountDialogDisplayed } onClose={ handleCloseAccountDialog } />

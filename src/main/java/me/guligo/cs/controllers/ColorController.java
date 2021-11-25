@@ -19,7 +19,10 @@ public class ColorController {
         this.colorService = colorService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "http://192.168.178.20:3000"
+    })
     @GetMapping("/colors")
     public Collection<ColorDto> getColors() {
         return colorService.getColors();

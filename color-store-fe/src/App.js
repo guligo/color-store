@@ -23,12 +23,12 @@ class App extends React.Component {
   async componentDidMount() {
     var publicKey = await window.ethereum.request({method: 'eth_accounts'});
 
-    fetch('http://localhost:8080/colors')
+    fetch('http://192.168.178.20:8080/colors')
      .then(res => {
        return res.json();
      })
      .then(colors => this.setState({colors: colors, publicKey: publicKey[0]}))
-     .catch(console.log)
+     .catch(alert)
 
     try {
       this.web3 = new Web3(window.ethereum);
