@@ -7,6 +7,7 @@ import AssetDialog from "./components/dialogs/AssetDialog"
 import ColorStore from "./contracts/ColorStore.json";
 import ColorCoin from "./contracts/ColorCoin.json";
 import Web3 from 'web3';
+import ApiHelper from './helpers/ApiHelper';
 
 class App extends React.Component {
 
@@ -21,14 +22,9 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    var publicKey = await window.ethereum.request({method: 'eth_accounts'});
-
-    fetch('http://192.168.178.20:8080/colors')
-     .then(res => {
-       return res.json();
-     })
-     .then(colors => this.setState({colors: colors, publicKey: publicKey[0]}))
-     .catch(alert)
+    const publicKey = await window.ethereum.request({method: 'eth_accounts'});
+    const colors = await ApiHelper.getColors();
+    this.setState({colors: colors, publicKey: publicKey[0]});
 
     try {
       this.web3 = new Web3(window.ethereum);

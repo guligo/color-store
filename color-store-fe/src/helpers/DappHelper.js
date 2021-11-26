@@ -1,4 +1,4 @@
-const DappUtil = {
+const DappHelper = {
   isMetaMaskInstalled: () => {
     const { ethereum } = window;
     return Boolean(ethereum && ethereum.isMetaMask);
@@ -20,4 +20,4 @@ const DappUtil = {
   }
 }
 
-export default DappUtil;
+export default DappHelper;

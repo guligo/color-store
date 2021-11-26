@@ -5,7 +5,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import DappHelper from '../../helpers/DappHelper'
+import DappHelper from '../../helpers/DappHelper';
+import ApiHelper from '../../helpers/ApiHelper';
 
 export default function AccountDialog(props) {
 
@@ -18,26 +19,14 @@ export default function AccountDialog(props) {
       console.log('First active MetaMask account =', publicKey);
 
       if (publicKey) {
-        fetch('http://192.168.178.20:8080/users/' + publicKey)
-          .then(res => {
-            return res.json();
-          })
-          .then(user => {
-            setUser(user);
-          })
-          .catch(console.log);
+        const user = await ApiHelper.getUser(publicKey);
+        setUser(user);
       }
     }
   }, []);
 
-  const handleSave = () => {
-    fetch('http://192.168.178.20:8080/users/' + user.id, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-      })
-      .catch(console.log);
-
+  const handleSave = async () => {
+    await ApiHelper.updateUser(user);
     props.onClose();
   };
 

@@ -6,23 +6,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import QRCode from 'qrcode.react';
+import ApiHelper from '../../helpers/ApiHelper';
 
 export default function AboutDialog(props) {
 
-  const [colorCoinContractAddress, setColorCoinContractAddress] = React.useState(null);
+  const [colorCoinContractAddress, setColorCoinContractAddress] = React.useState('0x0');
 
-  const [colorStoreContractAddress, setColorStoreContractAddress] = React.useState(null);
+  const [colorStoreContractAddress, setColorStoreContractAddress] = React.useState('0x0');
 
-  React.useEffect(() => {
-    fetch('http://192.168.178.20:8080/config')
-      .then(res => {
-        return res.json();
-      })
-      .then(config => {
-        setColorCoinContractAddress(config.colorCoinContractAddress);
-        setColorStoreContractAddress(config.colorStoreContractAddress);
-      })
-      .catch(console.log);
+  React.useEffect(async () => {
+    const config = await ApiHelper.getConfig();
+    setColorCoinContractAddress(config.colorCoinContractAddress);
+    setColorStoreContractAddress(config.colorStoreContractAddress);
   }, []);
 
   return (
