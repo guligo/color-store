@@ -8,7 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountDialog from './dialogs/AccountDialog';
 import AboutDialog from './dialogs/AboutDialog';
-import DappHelper from '../helpers/DappHelper'
+import DappHelper from '../helpers/DappHelper';
+import ApiHelper from '../helpers/ApiHelper';
 
 export default function MenuBar(props) {
 
@@ -16,7 +17,19 @@ export default function MenuBar(props) {
 
   const [accountDialogDisplayed, setAccountDialogDisplayed] = React.useState(false);
 
-  const [aboutDialogDisplayed, setAboutDialogDisplayed] = React.useState(false);
+  const [colorStoreContractAddress, setColorStoreContractAddress] = React.useState('0x0');
+
+  const [colorCoinContractAddress, setColorCoinContractAddress] = React.useState('0x0');
+
+  const [colorStoreContractDialogDisplayed, setColorStoreContractDialogDisplayed] = React.useState(false);
+
+  const [colorCoinContractDialogDisplayed, setColorCoinContractDialogDisplayed] = React.useState(false);
+
+  React.useEffect(async () => {
+    const config = await ApiHelper.getConfig();
+    setColorCoinContractAddress(config.colorCoinContractAddress);
+    setColorStoreContractAddress(config.colorStoreContractAddress);
+  }, []);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,13 +53,22 @@ export default function MenuBar(props) {
     setAccountDialogDisplayed(false);
   };
 
-  const handleOpenAboutDialog = () => {
-    setAboutDialogDisplayed(true);
+  const handleOpenColorStoreContractDialog = () => {
+    setColorStoreContractDialogDisplayed(true);
     handleClose();
   };
 
-  const handleCloseAboutDialog = () => {
-    setAboutDialogDisplayed(false);
+  const handleCloseColorStoreContractDialog = () => {
+    setColorStoreContractDialogDisplayed(false);
+  };
+
+  const handleOpenColorCoinContractDialog = () => {
+    setColorCoinContractDialogDisplayed(true);
+    handleClose();
+  };
+
+  const handleCloseColorCoinContractDialog = () => {
+    setColorCoinContractDialogDisplayed(false);
   };
 
   return (
@@ -78,11 +100,21 @@ export default function MenuBar(props) {
         >
           <MenuItem onClick={ handleConnectMetaMask }>Connect MetaMask</MenuItem>
           <MenuItem onClick={ handleOpenAccountDialog }>My Account</MenuItem>
-          <MenuItem onClick={ handleOpenAboutDialog }>About Color Store</MenuItem>
+          <MenuItem onClick={ handleOpenColorStoreContractDialog }>About Color Store Contract</MenuItem>
+          <MenuItem onClick={ handleOpenColorCoinContractDialog }>About Color Coin Contract</MenuItem>
         </Menu>
       </Toolbar>
       <AccountDialog open={ accountDialogDisplayed } onClose={ handleCloseAccountDialog } />
-      <AboutDialog open={ aboutDialogDisplayed } onClose={ handleCloseAboutDialog } />
+      <AboutDialog
+        label="Color Store Contract Address"
+        contractAddress={ colorStoreContractAddress }
+        open={ colorStoreContractDialogDisplayed }
+        onClose={ handleCloseColorStoreContractDialog } />
+      <AboutDialog
+        label="Color Coin Contract Address"
+        contractAddress={ colorCoinContractAddress }
+        open={ colorCoinContractDialogDisplayed }
+        onClose={ handleCloseColorCoinContractDialog } />
     </AppBar>
   );
 }
