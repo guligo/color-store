@@ -8,8 +8,58 @@ import TableCell from '@mui/material/TableCell';
 import Tooltip from '@mui/material/Tooltip';
 import CircleIcon from '@mui/icons-material/Circle';
 import Button from '@mui/material/Button';
+import AssetDialog from "./dialogs/AssetDialog"
+import ApiHelper from '../helpers/ApiHelper';
+import DappHelper from '../helpers/DappHelper';
 
 export default function AssetList(props) {
+
+  const [assets, setAssets] = React.useState([]);
+
+  const [assetDialogData, setAssetDialogData] = React.useState(null);
+
+  const [assetDialogDisplayed, setAssetDialogDisplayed] = React.useState(false);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      const colors = await ApiHelper.getColors();
+      setAssets(colors);
+    }
+    fetchData();
+  }, []);
+
+  const handleViewAsset = (asset) => {
+    setAssetDialogData(asset);
+    setAssetDialogDisplayed(true);
+  };
+
+  const handleBuyAsset = async (asset) => {
+    console.log(`Buying token with ID ${asset.tokenId}`);
+
+    const colorStoreContractInstance = await DappHelper.getColorStoreContractInstance();
+
+    await colorStoreContractInstance.methods.buyToken(asset.tokenId).send({
+      from: props.account,
+      value: DappHelper.toWei("100000000000")
+    });
+  };
+
+  const handleSellAsset = async (asset) => {
+    console.log(`Selling token with ID ${asset.tokenId}`);
+
+    const colorCoinContractInstance = await DappHelper.getColorCoinContractInstance();
+    const colorStoreContractInstance = await DappHelper.getColorStoreContractInstance();
+
+    let operationApproved = await colorCoinContractInstance.methods.isApprovedForAll(props.account, colorStoreContractInstance.options.address).call();
+    if (!operationApproved) {
+      await colorCoinContractInstance.methods.setApprovalForAll(colorStoreContractInstance.options.address, true).send({from: props.account});
+    }
+    await colorStoreContractInstance.methods.sellToken(asset.tokenId).send({from: props.account});
+  };
+
+  const handleCloseAssetDialog = async () => {
+    setAssetDialogDisplayed(false);
+  }
 
   const renderOwner = (owner) => {
     return owner.alias ? owner.alias : owner.id.substring(0, 5) + '...' + owner.id.substring(owner.id.length - 3, owner.id.length)
@@ -19,14 +69,14 @@ export default function AssetList(props) {
     if (asset.owner.id === props.account) {
       return (
         <TableCell align="center">
-          <Button variant="contained" onClick={_ => props.onViewAsset(asset)} sx={{ marginLeft: '5px', marginTop: '5px'}}>View</Button>
-          <Button variant="contained" onClick={_ => props.onSellAsset(asset)} sx={{ marginLeft: '5px', marginTop: '5px'}}>Sell</Button>
+          <Button variant="contained" onClick={_ => handleViewAsset(asset)} sx={{ marginLeft: '5px', marginTop: '5px'}}>View</Button>
+          <Button variant="contained" onClick={_ => handleSellAsset(asset)} sx={{ marginLeft: '5px', marginTop: '5px'}}>Sell</Button>
         </TableCell>
       );
     } else if (asset.owner.alias === 'Color Store') {
       return (
         <TableCell align="center">
-          <Button variant="contained" onClick={_ => props.onBuyAsset(asset)}>Buy</Button>
+          <Button variant="contained" onClick={_ => handleBuyAsset(asset)}>Buy</Button>
         </TableCell>
       );
     } else {
@@ -47,7 +97,7 @@ export default function AssetList(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-        { props.assets.map((asset) => (
+        { assets.map((asset) => (
           <TableRow
             hover
             key={asset.tokenId}
@@ -64,6 +114,7 @@ export default function AssetList(props) {
         ))}
         </TableBody>
       </Table>
+      <AssetDialog open={ assetDialogDisplayed } data={ assetDialogData } onClose={ handleCloseAssetDialog } />
     </TableContainer>
   );
 }

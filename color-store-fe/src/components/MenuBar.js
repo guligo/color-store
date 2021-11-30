@@ -25,10 +25,13 @@ export default function MenuBar(props) {
 
   const [colorCoinContractDialogDisplayed, setColorCoinContractDialogDisplayed] = React.useState(false);
 
-  React.useEffect(async () => {
-    const config = await ApiHelper.getConfig();
-    setColorCoinContractAddress(config.colorCoinContractAddress);
-    setColorStoreContractAddress(config.colorStoreContractAddress);
+  React.useEffect(() => {
+    async function fetchData() {
+      const config = await ApiHelper.getConfig();
+      setColorCoinContractAddress(config.colorCoinContractAddress);
+      setColorStoreContractAddress(config.colorStoreContractAddress);
+    }
+    fetchData();
   }, []);
 
   const handleMenu = (event) => {

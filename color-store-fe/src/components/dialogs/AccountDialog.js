@@ -2,7 +2,6 @@ import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import DappHelper from '../../helpers/DappHelper';
@@ -12,17 +11,20 @@ export default function AccountDialog(props) {
 
   const [user, setUser] = React.useState(null);
 
-  React.useEffect(async () => {
-    if (DappHelper.isMetaMaskInstalled()) {
-      console.log('MetaMask is installed');
-      let publicKey = await DappHelper.getFirstActiveMetaMaskAccount();
-      console.log('First active MetaMask account =', publicKey);
+  React.useEffect(() => {
+    async function fetchData() {
+      if (DappHelper.isMetaMaskInstalled()) {
+        console.log('MetaMask is installed');
+        const account = await DappHelper.getFirstActiveMetaMaskAccount();
+        console.log('First active MetaMask account =', account);
 
-      if (publicKey) {
-        const user = await ApiHelper.getUser(publicKey);
-        setUser(user);
+        if (account) {
+          const user = await ApiHelper.getUser(account);
+          setUser(user);
+        }
       }
     }
+    fetchData();
   }, []);
 
   const handleSave = async () => {
