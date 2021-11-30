@@ -16,3 +16,4 @@ https://create-react-app.dev/docs/getting-started/#npm
 - [ ] Clean up project directory structure
 - [ ] (Optional) Consider storing user information in local Postgres
 - [ ] (Optional) Consider introducing tests for BE
+- [ ] (Optional) (Pre-)cache images
