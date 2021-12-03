@@ -45,8 +45,9 @@ https://docs.metamask.io/guide/create-dapp.html
 - [x] Configure CORS globally
 - [x] Refresh color-list in UI on any blockchain action
 - [ ] Make IP adjustable for cases when address of the host changes
-- [ ] Clean up project directory structure
+- [x] Clean up project directory structure
 - [ ] (Optional) Clean up MetaMask connection flow as it currently feels a bit "shaky"
 - [ ] (Optional) Consider storing user information in local Postgres
 - [ ] (Optional) Consider introducing tests for BE
 - [x] (Optional) (Pre-)cache images
+- [ ] (Optional) Show pop-up on approval / rejection of transaction
