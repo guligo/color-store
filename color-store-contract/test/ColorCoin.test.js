@@ -8,7 +8,7 @@ contract('ColorCoin', (accounts) => {
     const colorCoinInstance = await ColorCoin.deployed();
     const tokenURI = await colorCoinInstance.tokenURI.call(0x9BB7D4);
 
-    assert.equal(tokenURI.valueOf(), 'http://127.0.0.1:8080/meta/' + 0x9BB7D4);
+    assert.equal(tokenURI.valueOf(), process.env.META_URI + 0x9BB7D4);
   });
 
   it('should be possible for owner to mint new NFT', async () => {

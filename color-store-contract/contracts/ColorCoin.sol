@@ -6,12 +6,16 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ColorCoin is ERC721, Ownable {
 
+    string private _metaURI;
+
     uint256[] private _tokenIds;
 
-    constructor() ERC721("ColorCoin", "COL") {}
+    constructor(string memory metaURI) ERC721("ColorCoin", "COL") {
+        _metaURI = metaURI;
+    }
 
     function _baseURI() internal view virtual override returns (string memory) {
-        return "http://192.168.178.20:8080/meta/";
+        return _metaURI;
     }
 
     function createColor(address to, uint256 tokenId) onlyOwner public {

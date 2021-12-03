@@ -1,16 +1,17 @@
 const fs = require('fs').promises;
+require('dotenv').config({path: "../.env"});
 
 const ColorCoin = artifacts.require('ColorCoin');
 const ColorStore = artifacts.require('ColorStore');
 
 module.exports = async function(deployer) {
-  console.log('Deploying contracts');
-  await deployer.deploy(ColorCoin);
+  console.log(`Deploying contracts with following metafile base URI: ${process.env.META_URI}`);
+  await deployer.deploy(ColorCoin, process.env.META_URI);
   await deployer.deploy(ColorStore, ColorCoin.address, 100000000000);
 
   console.log('Creating application-dev.yaml file');
   await fs.writeFile(
-    '../src/main/resources/application-dev.yaml',
+    '../color-store-be/src/main/resources/application-dev.yaml',
     `blockchain.contracts.color-coin.address: "${ColorCoin.address}"\n` +
     `blockchain.contracts.color-store.address: "${ColorStore.address}"\n`
   );
