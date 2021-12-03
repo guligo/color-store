@@ -16,7 +16,7 @@ export default function AccountDialog(props) {
       if (DappHelper.isMetaMaskInstalled()) {
         console.log('MetaMask is installed');
         const account = await DappHelper.getFirstActiveMetaMaskAccount();
-        console.log('First active MetaMask account =', account);
+        console.log('First active MetaMask account:', account);
 
         if (account) {
           const user = await ApiHelper.getUser(account);

@@ -12,6 +12,8 @@ import AssetDialog from "./dialogs/AssetDialog"
 import ApiHelper from '../helpers/ApiHelper';
 import DappHelper from '../helpers/DappHelper';
 
+const ASSET_LIST_REFRESH_INTERVAL = 20 * 1000; // ms
+
 export default function AssetList(props) {
 
   const [assets, setAssets] = React.useState([]);
@@ -24,7 +26,13 @@ export default function AssetList(props) {
     async function fetchData() {
       const colors = await ApiHelper.getColors();
       setAssets(colors);
+      console.log('Color list updated');
+
+      setTimeout(async function() {
+        await fetchData();
+      }, ASSET_LIST_REFRESH_INTERVAL);
     }
+
     fetchData();
   }, []);
 
