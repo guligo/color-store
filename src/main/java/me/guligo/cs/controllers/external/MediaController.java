@@ -18,8 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Controller
 public class MediaController {
 
-    private String DEFAULT_IMAGE = "/color-pencils.jpeg";
-
     private MediaService mediaService;
 
     @Autowired
@@ -30,7 +28,7 @@ public class MediaController {
     @ResponseBody
     @GetMapping(value = "/images/{tokenId}.png", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getImage(@PathVariable final int tokenId) throws IOException {
-        final Optional<RenderedImage> image = mediaService.createImage(tokenId);
+        final Optional<RenderedImage> image = mediaService.getImage(tokenId);
         if (image.isPresent()) {
             final ByteArrayOutputStream os = new ByteArrayOutputStream();
             ImageIO.write(image.get(), MediaType.IMAGE_PNG.getSubtype(), os);

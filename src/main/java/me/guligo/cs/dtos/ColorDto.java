@@ -17,4 +17,9 @@ public class ColorDto {
     @lombok.NonNull
     private UserDto owner;
 
+    @Override
+    public int hashCode() {
+        return tokenId;
+    }
+
 }
