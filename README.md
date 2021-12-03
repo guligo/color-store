@@ -7,7 +7,10 @@ Before executing commands below, run `ifconfig` and get the network address of y
 1. Start Ganache node on `http://0.0.0.0:8545`
 
 1. Build, test and deploy Solidity smart contracts project:<br />
-`(cd color-store-contract && truffle test && truffle migrate --reset --network test)`
+`(cd color-store-contract \
+    && truffle test \
+    && truffle migrate --reset --network test \
+    && cp build/contracts/* ../color-store-fe/src/contracts)`
 
 1. Build and run Spring Boot back-end project:<br />
 `(cd color-store-be && mvn spring-boot:run)`
