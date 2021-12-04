@@ -96,7 +96,7 @@ export default function AssetList(props) {
 
   return (
     <TableContainer sx={{ maxHeight: '100%' }}>
-      <Table aria-label="sticky table">
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell align="center" sx={{ width: '33%', fontWeight: 'bold' }}>Color</TableCell>

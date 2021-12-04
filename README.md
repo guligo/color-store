@@ -1,6 +1,15 @@
-# Notes
+# Color Store
 
-## Commands
+## About
+
+Color Store is a market place for buying, selling and exchanging NFTs that represent different colors. This repo consists
+of front-end in React, back-end in Spring Boot, and Solidity smart contracts. Requires MetaMask wallet to interact with it.
+
+This is just a playground project with purpose of learning about smart contract development.
+
+## Dev Notes
+
+### Commands
 
 Before launching the project, run `ifconfig` and get the network address of the host in the local network. It
 is important in case MetaMask browser / wallet is used, for example, from mobile phone to access the user interface. In
@@ -9,9 +18,9 @@ configuration files:
 
 - _./color-store-be/src/main/java/application.yaml_
 
-- _./color-store-contract/.env
+- _./color-store-contract/.env_
 
-- _./color-store-fe/.env
+- _./color-store-fe/.env_
 
 In order to run the project:
 
@@ -31,7 +40,7 @@ In order to run the project:
 1. Build and run React front-end project (run in different shell):<br />
 `(cd color-store-fe && npm start)`
 
-## Useful Links
+### Useful Links
 
 - ERC-721 Non-Fungible Token Standard:<br />
 https://ethereum.org/en/developers/docs/standards/tokens/erc-721/
@@ -50,17 +59,3 @@ https://mui.com/
 
 - MetaMask Docs: Create A Simple Dapp:<br />
 https://docs.metamask.io/guide/create-dapp.html
-
-## To-Dos
-
-- [x] Refactor `AboutDialog` into `ContractDialog` and use 2 instances of it for each of the contracts
-- [x] Move color list retrieval logic into `AssetList`
-- [x] Configure CORS globally
-- [x] Refresh color-list in UI on any blockchain action
-- [ ] Make IP adjustable for cases when address of the host changes
-- [x] Clean up project directory structure
-- [ ] (Optional) Clean up MetaMask connection flow as it currently feels a bit "shaky"
-- [ ] (Optional) Consider storing user information in local Postgres
-- [ ] (Optional) Consider introducing tests for BE
-- [x] (Optional) (Pre-)cache images
-- [ ] (Optional) Show pop-up on approval / rejection of transaction
