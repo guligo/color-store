@@ -2,12 +2,21 @@
 
 ## About
 
-Color Store is a market place for buying, selling and exchanging NFTs that represent different colors. This repo consists
-of front-end in React, back-end in Spring Boot, and Solidity smart contracts. Requires MetaMask wallet to interact with it.
+Color Store dapp is a market place for buying, selling and exchanging NFTs that represent different colors. This repo consists
+of front-end in JS + React, back-end in Java + Spring Boot, and Solidity smart contracts for Ethereum blockchain. Requires
+MetaMask wallet to interact with it.
 
-This is just a playground project with purpose of learning about smart contract development.
+This is just a playground project with the purpose of learning more about smart contract development.
 
 ## Dev Notes
+
+### Dependencies
+
+- [MetaMask](https://metamask.io/) in browser and / or mobile for interaction with the dapp
+
+- [Ganache](https://trufflesuite.com/ganache/) for deployment of smart contracts onto personal Ethereum blockchain
+
+- [Node.js](https://nodejs.org/), [Maven](https://maven.apache.org/) and [Truffle](https://trufflesuite.com/truffle/)
 
 ### Commands
 
@@ -24,7 +33,7 @@ configuration files:
 
 In order to run the project:
 
-1. Start [Ganache](https://trufflesuite.com/ganache/) node on `http://0.0.0.0:8545`
+1. Start Ganache node on `http://0.0.0.0:8545`
 
 1. Build, test and deploy Solidity smart contracts project:<br />
 ```
