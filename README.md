@@ -16,11 +16,11 @@ is important in case MetaMask browser / wallet is used, for example, from mobile
 case user interface and MetaMask will always be accessed from the local machine, use `127.0.0.1`. Adjust IP in following
 configuration files:
 
-- _./color-store-be/src/main/java/application.yaml_
+- [color-store-be/src/main/java/application.yaml]
 
-- _./color-store-contract/.env_
+- [color-store-contract/.env]
 
-- _./color-store-fe/.env_
+- [color-store-fe/.env]
 
 In order to run the project:
 
