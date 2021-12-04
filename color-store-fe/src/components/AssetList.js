@@ -96,19 +96,19 @@ export default function AssetList(props) {
 
   return (
     <TableContainer sx={{ maxHeight: '100%' }}>
-      <Table stickyHeader aria-label="sticky table">
+      <Table aria-label="sticky table">
         <TableHead>
           <TableRow>
-            <TableCell align="center" sx={{ width: '33%' }}>Color</TableCell>
-            <TableCell align="center" sx={{ width: '33%' }}>Owner</TableCell>
-            <TableCell align="center" sx={{ width: '33%' }}>Action</TableCell>
+            <TableCell align="center" sx={{ width: '33%', fontWeight: 'bold' }}>Color</TableCell>
+            <TableCell align="center" sx={{ width: '33%', fontWeight: 'bold' }}>Owner</TableCell>
+            <TableCell align="center" sx={{ width: '33%', fontWeight: 'bold' }}>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
         { assets.map((asset) => (
           <TableRow
             hover
-            key={asset.tokenId}
+            key={ asset.tokenId }
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell align="center">

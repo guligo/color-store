@@ -2,15 +2,28 @@
 
 ## Commands
 
-Before executing commands below, run `ifconfig` and get the network address of your machine.
+Before launching the project, run `ifconfig` and get the network address of the host in the local network. It
+is important in case MetaMask browser / wallet is used, for example, from mobile phone to access the user interface. In
+case user interface and MetaMask will always be accessed from the local machine, use `127.0.0.1`. Adjust IP in following
+configuration files:
 
-1. Start Ganache node on `http://0.0.0.0:8545`
+- _./color-store-be/src/main/java/application.yaml_
+
+- _./color-store-contract/.env
+
+- _./color-store-fe/.env
+
+In order to run the project:
+
+1. Start [Ganache](https://trufflesuite.com/ganache/) node on `http://0.0.0.0:8545`
 
 1. Build, test and deploy Solidity smart contracts project:<br />
-`(cd color-store-contract \
+```
+(cd color-store-contract \
     && truffle test \
     && truffle migrate --reset --network test \
-    && cp build/contracts/* ../color-store-fe/src/contracts)`
+    && cp build/contracts/* ../color-store-fe/src/contracts)
+```
 
 1. Build and run Spring Boot back-end project:<br />
 `(cd color-store-be && mvn spring-boot:run)`
