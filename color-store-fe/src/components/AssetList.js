@@ -8,7 +8,9 @@ import TableCell from '@mui/material/TableCell';
 import Tooltip from '@mui/material/Tooltip';
 import CircleIcon from '@mui/icons-material/Circle';
 import Button from '@mui/material/Button';
-import AssetDialog from "./dialogs/AssetDialog"
+import AssetDialog from "./dialogs/AssetDialog";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import ApiHelper from '../helpers/ApiHelper';
 import DappHelper from '../helpers/DappHelper';
 
@@ -21,6 +23,12 @@ export default function AssetList(props) {
   const [assetDialogData, setAssetDialogData] = React.useState(null);
 
   const [assetDialogDisplayed, setAssetDialogDisplayed] = React.useState(false);
+
+  const [feedback, setFeedback] = React.useState({
+    displayed: false,
+    severity: null,
+    text: null
+  });
 
   React.useEffect(() => {
     async function fetchData() {
@@ -44,25 +52,37 @@ export default function AssetList(props) {
   const handleBuyAsset = async (asset) => {
     console.log(`Buying token with ID ${asset.tokenId}`);
 
-    const colorStoreContractInstance = await DappHelper.getColorStoreContractInstance();
+    try {
+      const colorStoreContractInstance = await DappHelper.getColorStoreContractInstance();
 
-    await colorStoreContractInstance.methods.buyToken(asset.tokenId).send({
-      from: props.account,
-      value: DappHelper.toWei("100000000000")
-    });
+      await colorStoreContractInstance.methods.buyToken(asset.tokenId).send({
+        from: props.account,
+        value: DappHelper.toWei("100000000000")
+      });
+
+      displaySuccess('Buy transaction approved, please wait a moment before transaction is completed');
+    } catch (err) {
+      displayError(err.message);
+    }
   };
 
   const handleSellAsset = async (asset) => {
     console.log(`Selling token with ID ${asset.tokenId}`);
 
-    const colorCoinContractInstance = await DappHelper.getColorCoinContractInstance();
-    const colorStoreContractInstance = await DappHelper.getColorStoreContractInstance();
+    try {
+      const colorCoinContractInstance = await DappHelper.getColorCoinContractInstance();
+      const colorStoreContractInstance = await DappHelper.getColorStoreContractInstance();
 
-    let operationApproved = await colorCoinContractInstance.methods.isApprovedForAll(props.account, colorStoreContractInstance.options.address).call();
-    if (!operationApproved) {
-      await colorCoinContractInstance.methods.setApprovalForAll(colorStoreContractInstance.options.address, true).send({from: props.account});
+      let operationApproved = await colorCoinContractInstance.methods.isApprovedForAll(props.account, colorStoreContractInstance.options.address).call();
+      if (!operationApproved) {
+        await colorCoinContractInstance.methods.setApprovalForAll(colorStoreContractInstance.options.address, true).send({from: props.account});
+      }
+      await colorStoreContractInstance.methods.sellToken(asset.tokenId).send({from: props.account});
+
+      displaySuccess('Sell transaction approved, please wait a moment before transaction is completed');
+    } catch (err) {
+      displayError(err.message);
     }
-    await colorStoreContractInstance.methods.sellToken(asset.tokenId).send({from: props.account});
   };
 
   const handleCloseAssetDialog = async () => {
@@ -94,6 +114,30 @@ export default function AssetList(props) {
     }
   };
 
+  const displaySuccess = (text) => {
+    displayFeedback(text, 'success');
+  };
+
+  const displayError = (text) => {
+    displayFeedback(text, 'error');
+  };
+
+  const displayFeedback = (text, severity) => {
+    setFeedback({
+      displayed: true,
+      severity: severity,
+      text: text
+    });
+  };
+
+  const onCloseFeedback = () => {
+    setFeedback({
+      displayed: false,
+      severity: feedback.severity,
+      text: feedback.text
+    });
+  };
+
   return (
     <TableContainer sx={{ maxHeight: '100%' }}>
       <Table>
@@ -123,6 +167,11 @@ export default function AssetList(props) {
         </TableBody>
       </Table>
       <AssetDialog open={ assetDialogDisplayed } data={ assetDialogData } onClose={ handleCloseAssetDialog } />
+      <Snackbar open={ feedback.displayed } autoHideDuration={ 10000 } onClose={ onCloseFeedback }>
+        <Alert severity={ feedback.severity } sx={{ width: '100%' }} onClose={ onCloseFeedback }>
+          { feedback.text }
+        </Alert>
+      </Snackbar>
     </TableContainer>
   );
 }
