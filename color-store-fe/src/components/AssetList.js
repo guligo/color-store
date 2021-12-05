@@ -14,15 +14,16 @@ import Alert from '@mui/material/Alert';
 import ApiHelper from '../helpers/ApiHelper';
 import DappHelper from '../helpers/DappHelper';
 
-const ASSET_LIST_REFRESH_INTERVAL = 20 * 1000; // ms
+const ASSET_LIST_REFRESH_INTERVAL = 10 * 1000; // ms
 
 export default function AssetList(props) {
 
   const [assets, setAssets] = React.useState([]);
 
-  const [assetDialogData, setAssetDialogData] = React.useState(null);
-
-  const [assetDialogDisplayed, setAssetDialogDisplayed] = React.useState(false);
+  const [selectedAsset, setSelectedAsset] = React.useState({
+    displayed: false,
+    data: null
+  });
 
   const [feedback, setFeedback] = React.useState({
     displayed: false,
@@ -43,11 +44,6 @@ export default function AssetList(props) {
 
     fetchData();
   }, []);
-
-  const handleViewAsset = (asset) => {
-    setAssetDialogData(asset);
-    setAssetDialogDisplayed(true);
-  };
 
   const handleBuyAsset = async (asset) => {
     console.log(`Buying token with ID ${asset.tokenId}`);
@@ -85,9 +81,19 @@ export default function AssetList(props) {
     }
   };
 
+  const handleViewAsset = (asset) => {
+    setSelectedAsset({
+      displayed: true,
+      data: asset
+    });
+  };
+
   const handleCloseAssetDialog = async () => {
-    setAssetDialogDisplayed(false);
-  }
+    setSelectedAsset({
+      displayed: false,
+      data: selectedAsset.data
+    });
+  };
 
   const renderOwner = (owner) => {
     return owner.alias ? owner.alias : owner.id.substring(0, 5) + '...' + owner.id.substring(owner.id.length - 3, owner.id.length)
@@ -166,8 +172,8 @@ export default function AssetList(props) {
         ))}
         </TableBody>
       </Table>
-      <AssetDialog open={ assetDialogDisplayed } data={ assetDialogData } onClose={ handleCloseAssetDialog } />
-      <Snackbar open={ feedback.displayed } autoHideDuration={ 10000 } onClose={ onCloseFeedback }>
+      <AssetDialog open={ selectedAsset.displayed } data={ selectedAsset.data } onClose={ handleCloseAssetDialog } />
+      <Snackbar open={ feedback.displayed } autoHideDuration={ ASSET_LIST_REFRESH_INTERVAL } onClose={ onCloseFeedback }>
         <Alert severity={ feedback.severity } sx={{ width: '100%' }} onClose={ onCloseFeedback }>
           { feedback.text }
         </Alert>
