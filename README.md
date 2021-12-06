@@ -10,6 +10,8 @@ This is just a playground project with the purpose of learning more about smart 
 
 <img src="screenshot-1.png" width="640" />
 
+<img src="screenshot-2.png" width="640" />
+
 ## Dev Notes
 
 ### Dependencies
