@@ -8,12 +8,6 @@ MetaMask wallet to interact with it.
 
 This is just a playground project with the purpose of learning more about smart contract development.
 
-<img src="screenshot-1.png" width="640" />
-
-<img src="screenshot-2.png" width="640" />
-
-<img src="screenshot-3.png" width="320" />
-
 ## Dev Notes
 
 ### Dependencies
@@ -74,3 +68,21 @@ https://mui.com/
 
 - MetaMask Docs: Create A Simple Dapp:<br />
 https://docs.metamask.io/guide/create-dapp.html
+
+## Screenshots
+
+Asset list:
+
+<img src="screenshot-1.png" width="640" />
+
+Asset view:
+
+<img src="screenshot-2.png" width="640" />
+
+Asset list in MetaMask:
+
+<img src="screenshot-3.png" width="320" />
+
+Asset view in MetaMask:
+
+<img src="screenshot-4.png" width="320" />
