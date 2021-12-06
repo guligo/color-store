@@ -71,11 +71,10 @@ https://docs.metamask.io/guide/create-dapp.html
 
 ## Screenshots
 
-
 - Asset list:<br /><img src="screenshot-1.png" width="640" />
 
-- Asset view:<br /><img src="screenshot-2.png" width="640" />
+- Owned asset view:<br /><img src="screenshot-2.png" width="640" />
 
-- Asset list in MetaMask:<br /><img src="screenshot-3.png" width="320" />
+- Owned asset list in MetaMask:<br /><img src="screenshot-3.png" width="320" />
 
-- Asset view in MetaMask:<br /><img src="screenshot-4.png" width="320" />
+- Owned asset view in MetaMask:<br /><img src="screenshot-4.png" width="320" />
