@@ -2,7 +2,7 @@
 
 ## About
 
-Color Store dapp is a market place for buying, selling and exchanging NFTs that represent different colors. This repo consists
+The Color Store dapp is a market place for buying, selling and exchanging NFTs that represent different colors. This repo consists
 of front-end in JS + React, back-end in Java + Spring Boot, and Solidity smart contracts for Ethereum blockchain. Requires
 MetaMask wallet to interact with it.
 
