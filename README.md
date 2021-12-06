@@ -8,14 +8,6 @@ MetaMask wallet to interact with it.
 
 This is just a playground project with the purpose of learning more about smart contract development.
 
-![Asset List](screenshot-1.png)
-
-![Asset View](screenshot-2.png)
-
-![Asset List in MetaMask](screenshot-3.png)
-
-![Asset View in MetaMask](screenshot-4.png)
-
 ## Dev Notes
 
 ### Dependencies
