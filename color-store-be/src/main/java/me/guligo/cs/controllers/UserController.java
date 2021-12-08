@@ -1,5 +1,6 @@
 package me.guligo.cs.controllers;
 
+import javax.validation.Valid;
 import me.guligo.cs.dtos.UserDto;
 import me.guligo.cs.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/users/{userId}")
-    public void updateUser(@PathVariable final String userId, @RequestBody final UserDto user) {
+    public void updateUser(@PathVariable final String userId, @Valid @RequestBody final UserDto user) {
         userService.updateUser(userId, user);
     }
 
