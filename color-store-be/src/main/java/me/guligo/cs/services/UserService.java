@@ -26,6 +26,7 @@ public class UserService {
     }
 
     public UserDto getUser(final String userId) {
+        log.info("Retrieving user with ID {}", userId);
         return users.getOrDefault(userId.toLowerCase(), UserDto.builder().id(userId).build());
     }
 

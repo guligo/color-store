@@ -1,0 +1,20 @@
+server.port: 8080
+
+spring:
+  application.name: color-store-proxy
+
+zuul:
+  routes:
+    color-store-be:
+      path: /color-store/**
+      serviceId: color-store-be
+      stripPrefix: true
+
+color-store-be:
+  ribbon:
+    NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    listOfServers: http://localhost:8081,http://localhost:8082
+    ConnectTimeout: 1000
+    ReadTimeout: 3000
+    MaxTotalHttpConnections: 500
+    MaxConnectionsPerHost: 100
