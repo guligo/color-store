@@ -1,11 +1,15 @@
 package me.guligo.cs.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.guligo.cs.dtos.external.MetadataDto;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ColorDto {
 
     @lombok.NonNull
