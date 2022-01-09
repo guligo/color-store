@@ -15,28 +15,21 @@ workspace "Color Store" {
             colorStore = softwareSystem "Color Store App" "Allows users to view Color Coin NFTs that they own and intiate buy / sell transactions" {
 
                 frontend = container "Frontend" "Calls backend REST API and delivers static and dynamic content to browser" "JavaScript, React"
-
                 backend = container "Backend" "Provides business logic via REST API in JSON format" "Java, Spring Boot"
-
                 database = container "Database" "Stores user information" "Postgres"
             }
 
             blockchain = softwareSystem "Ethereum Blockchain" "Verifies and stores transactions as well as executes smart contracts of Color Store and Color Coin" {
 
                 colorStoreContract = container "Color Store" "Smart contract to buy and sell the NFT tokens from" "Solidity"
-
                 colorCoinContract = container "Color Coin" "Smart contract that describes behaviour of NFT token" "ERC721, Solidity"
             }
         }
 
         user -> frontend "Views color NFTs via browser in"
-
         frontend -> backend "Calls API of"
-
         backend -> colorStoreContract "Reads transactions from"
-
         backend -> database "Writes and reads information from"
-
         colorStoreContract -> colorCoinContract "Refers to and owns"
     }
 
