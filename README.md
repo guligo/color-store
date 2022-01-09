@@ -33,7 +33,7 @@ configuration files:
 
 In order to run the project:
 
-1. Start PostgreSQL:
+1. Start PostgreSQL:<br />
    `docker run --name color-store-postgres -e POSTGRES_DB=color-store -e POSTGRES_PASSWORD=secret -d -p 5433:5432 postgres`
 
 3. Start Ganache node on `http://0.0.0.0:8545`
