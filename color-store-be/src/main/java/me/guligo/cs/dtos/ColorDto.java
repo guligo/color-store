@@ -18,7 +18,6 @@ public class ColorDto {
     @lombok.NonNull
     private int tokenId;
 
-    @lombok.NonNull
     private UserDto owner;
 
     @Override
