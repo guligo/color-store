@@ -28,7 +28,11 @@ export default function AccountDialog(props) {
   }, []);
 
   const handleSave = async () => {
-    await ApiHelper.updateUser(user);
+    try {
+      await ApiHelper.updateUser(user);
+    } catch (err) {
+      console.error(err);
+    }
     props.onClose();
   };
 
