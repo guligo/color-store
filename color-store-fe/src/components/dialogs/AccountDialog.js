@@ -11,6 +11,8 @@ export default function AccountDialog(props) {
 
   const [user, setUser] = React.useState(null);
 
+  const [error, setError] = React.useState(null);
+
   React.useEffect(() => {
     async function fetchData() {
       if (DappHelper.isMetaMaskInstalled()) {
@@ -29,11 +31,12 @@ export default function AccountDialog(props) {
 
   const handleSave = async () => {
     try {
+      setError(null);
       await ApiHelper.updateUser(user);
+      props.onClose();
     } catch (err) {
-      console.error(err);
+      setError(err.message);
     }
-    props.onClose();
   };
 
   const setAlias = (event) => {
@@ -53,6 +56,8 @@ export default function AccountDialog(props) {
           defaultValue={ user?.alias }
           onChange={ setAlias }
           inputProps={{ maxLength: 15 }}
+          error={ error != null }
+          helperText={ error }
           fullWidth />
       </DialogContent>
       <DialogActions>
