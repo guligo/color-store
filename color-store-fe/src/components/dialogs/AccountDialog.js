@@ -14,20 +14,25 @@ export default function AccountDialog(props) {
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
-    async function fetchData() {
-      if (DappHelper.isMetaMaskInstalled()) {
-        console.log('MetaMask is installed');
-        const account = await DappHelper.getFirstActiveMetaMaskAccount();
-        console.log('First active MetaMask account:', account);
-
-        if (account) {
-          const user = await ApiHelper.getUser(account);
-          setUser(user);
-        }
-      }
-    }
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    if (DappHelper.isMetaMaskInstalled()) {
+      console.log('MetaMask is installed');
+      const account = await DappHelper.getFirstActiveMetaMaskAccount();
+      console.log('First active MetaMask account:', account);
+
+      if (account) {
+        const user = await ApiHelper.getUser(account);
+        setUser(user);
+      }
+    }
+  };
+
+  const setAlias = (event) => {
+    user.alias = event.target.value;
+  };
 
   const handleSave = async () => {
     try {
@@ -39,14 +44,16 @@ export default function AccountDialog(props) {
     }
   };
 
-  const setAlias = (event) => {
-    user.alias = event.target.value;
+  const handleClose = async () => {
+    props.onClose();
+    setError(null);
+    fetchData();
   };
 
   return (
     <Dialog
       open={ props.open }
-      onClose={ props.onClose }
+      onClose={ handleClose }
       fullWidth
       maxWidth="sm"
     >
@@ -62,7 +69,7 @@ export default function AccountDialog(props) {
       </DialogContent>
       <DialogActions>
         <Button onClick={ handleSave }>Save</Button>
-        <Button onClick={ props.onClose }>Close</Button>
+        <Button onClick={ handleClose }>Close</Button>
       </DialogActions>
     </Dialog>
   );
