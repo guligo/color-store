@@ -1,4 +1,7 @@
 /**
+ * DSL:
+ * https://github.com/structurizr/dsl/blob/master/docs/language-reference.md
+ *
  * Cookbook:
  * https://github.com/structurizr/dsl/tree/master/docs/cookbook
  *
@@ -8,25 +11,26 @@
 workspace "Color Store" {
 
     model {
-        user = person "User" "Person with browser and MetaMask plugin installed"
+        user = person "User" "Person with browser and MetaMask plugin installed."
 
         enterprise "Color Store" {
 
-            colorStore = softwareSystem "Color Store App" "Allows users to view Color Coin NFTs that they own and intiate buy / sell transactions" {
+            colorStore = softwareSystem "Color Store App" "Allows users to view / sell Color Coin NFTs that they own and intiate buy transactions of those that they do not own." {
 
-                frontend = container "Frontend" "Calls backend REST API and delivers static and dynamic content to browser" "JavaScript, React"
-                backend = container "Backend" "Provides business logic via REST API in JSON format" "Java, Spring Boot"
-                database = container "Database" "Stores user information" "Postgres"
+                frontend = container "Frontend" "Calls backend REST API and delivers static and dynamic content to browser." "JavaScript, React"
+                backend = container "Backend" "Provides business logic via REST API in JSON format." "Java, Spring Boot"
+                database = container "Database" "Stores user information." "Postgres"
             }
 
-            blockchain = softwareSystem "Ethereum Blockchain" "Verifies and stores transactions as well as executes smart contracts of Color Store and Color Coin" {
+            blockchain = softwareSystem "Ethereum Blockchain" "Verifies and stores transactions as well as executes smart contracts of Color Store and Color Coin." {
 
-                colorStoreContract = container "Color Store" "Smart contract to buy and sell the NFT tokens from" "Solidity"
-                colorCoinContract = container "Color Coin" "Smart contract that describes behaviour of NFT token" "ERC721, Solidity"
+                colorStoreContract = container "Color Store" "Smart contract to buy and sell the NFT tokens from." "Solidity"
+                colorCoinContract = container "Color Coin" "Smart contract that describes behaviour of NFT token." "ERC721, Solidity"
             }
         }
 
         user -> frontend "Views color NFTs via browser in"
+        user -> colorStoreContract "Signs and sends transactions to"
         frontend -> backend "Calls API of"
         backend -> colorStoreContract "Reads transactions from"
         backend -> database "Writes and reads information from"
