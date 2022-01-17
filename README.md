@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/guligo/color-store.svg?branch=main)](https://app.travis-ci.com/guligo/color-store)
+
 # Color Store
 
 ## About
