@@ -22,7 +22,7 @@ This is just a playground project with the purpose of learning more about smart 
 
 ### Architecture
 
-<img src="res/arch-1-landscape.png" width="640" />
+<img src="res/arch-1-landscape.png" width="100%" />
 
 ### Commands
 
