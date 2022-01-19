@@ -22,11 +22,11 @@ This is just a playground project with the purpose of learning more about smart 
 
 ### Architecture
 
-<img src="res/arch-1-landscape.png" width="640" />
+- System landscape view:<br /><img src="res/arch-1-landscape.png" width="640" />
 
-- [Container View: Color Store App](res/arch-2-color-store-app.png)
+- [Container view: Color Store App](res/arch-2-color-store-app.png)
 
-- [Container View: Blockchain](res/arch-3-blockchain.png)
+- [Container view: Blockchain](res/arch-3-blockchain.png)
 
 ### Commands
 
