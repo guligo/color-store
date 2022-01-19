@@ -20,6 +20,14 @@ This is just a playground project with the purpose of learning more about smart 
 
 - [Node.js](https://nodejs.org/), [Maven](https://maven.apache.org/) and [Truffle](https://trufflesuite.com/truffle/)
 
+### Architecture
+
+<img src="res/arch-1-landscape.png" width="640" />
+
+- [Container View: Color Store App](res/arch-2-color-store-app.png)
+
+- [Container View: Blockchain](res/arch-3-blockchain.png)
+
 ### Commands
 
 Before launching the project, run `ifconfig` and get the network address of the host in the local network. It is
@@ -76,10 +84,10 @@ In order to run the project:
 
 ## Screenshots
 
-- Asset list:<br /><img src="screenshot-1.png" width="640" />
+- Asset list:<br /><img src="res/screenshot-1.png" width="640" />
 
-- Owned asset view:<br /><img src="screenshot-2.png" width="640" />
+- Owned asset view:<br /><img src="res/screenshot-2.png" width="640" />
 
-- Owned asset list in MetaMask:<br /><img src="screenshot-3.png" width="320" />
+- Owned asset list in MetaMask:<br /><img src="res/screenshot-3.png" width="320" />
 
-- Owned asset view in MetaMask:<br /><img src="screenshot-4.png" width="320" />
+- Owned asset view in MetaMask:<br /><img src="res/screenshot-4.png" width="320" />
