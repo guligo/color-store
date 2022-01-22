@@ -1,4 +1,5 @@
 [![Build Status](https://app.travis-ci.com/guligo/color-store.svg?branch=main)](https://app.travis-ci.com/guligo/color-store)
+[![Coverage Status](https://coveralls.io/repos/github/guligo/color-store/badge.svg?branch=main)](https://coveralls.io/github/guligo/color-store?branch=main)
 
 # Color Store
 
