@@ -1,2 +1,2 @@
 language: java
-script: (cd color-store-be && mvn clean package)
+script: (cd color-store-be && mvn clean package jacoco:report coveralls:report)
