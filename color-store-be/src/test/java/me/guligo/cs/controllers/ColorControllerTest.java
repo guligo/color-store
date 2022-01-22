@@ -84,4 +84,11 @@ public class ColorControllerTest {
         Assert.assertEquals(0, color.getTokenId());
     }
 
+    @Test
+    public void getColor_Should_ReturnNull_When_ColorDoesNotExist() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/colors/1")
+                        .contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+    }
+
 }
