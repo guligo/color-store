@@ -43,9 +43,9 @@ In order to run the project:
 1. Start PostgreSQL:<br />
    `docker run --name color-store-postgres -e POSTGRES_DB=color-store -e POSTGRES_PASSWORD=secret -d -p 5433:5432 postgres`
 
-3. Start Ganache node on `http://0.0.0.0:8545`
+2. Start Ganache node on `http://0.0.0.0:8545`
 
-4. Build, test and deploy Solidity smart contracts project:
+3. Build, test and deploy Solidity smart contracts project:
     ```
     (cd color-store-contract \
         && truffle test \
@@ -53,10 +53,10 @@ In order to run the project:
         && cp build/contracts/* ../color-store-fe/src/contracts)
     ```
 
-5. Build and run Spring Boot back-end project:<br />
+4. Build and run Spring Boot back-end project:<br />
    `(cd color-store-be && mvn flyway:clean flyway:migrate spring-boot:run)`
 
-6. Build and run React front-end project (run in different shell):<br />
+5. Build and run React front-end project (run in different shell):<br />
    `(cd color-store-fe && npm start)`
 
 ### Useful Links
