@@ -53,10 +53,16 @@ In order to run the project:
         && cp build/contracts/* ../color-store-fe/src/contracts)
     ```
 
-4. Build and run Spring Boot back-end project:<br />
-   `(cd color-store-be && mvn flyway:clean flyway:migrate spring-boot:run)`
+4. Build and run Spring Boot back-end project (run both commands in different shell):<br />
+    ```
+    (cd color-store-be && mvn flyway:clean flyway:migrate spring-boot:run -Dspring-boot.run.arguments="--server.port=8081")
+    (cd color-store-be && mvn flyway:clean flyway:migrate spring-boot:run -Dspring-boot.run.arguments="--server.port=8082")
+    ```
 
-5. Build and run React front-end project (run in different shell):<br />
+5. Run Zuul reverse proxy (run in different shell):<br />
+   `(cd color-store-proxy && mvn spring-boot:run)`
+
+6. Build and run React front-end project (run in different shell):<br />
    `(cd color-store-fe && npm start)`
 
 ### Useful Links

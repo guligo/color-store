@@ -1,6 +1,5 @@
 package me.guligo.cs.services;
 
-import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import me.guligo.cs.utils.BlockchainUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class BlockchainService {
         this.colorService = colorService;
     }
 
-    @PostConstruct
+    // @PostConstruct
     public void connect() {
         final EthFilter filter = new EthFilter(DefaultBlockParameterName.EARLIEST, DefaultBlockParameterName.LATEST, configService.getConfig().getColorCoinContractAddress())
                 .addSingleTopic(EventEncoder.encode(BlockchainUtil.TRANSFER_EVENT));
