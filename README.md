@@ -1,10 +1,13 @@
+[![Build Status](https://app.travis-ci.com/guligo/color-store.svg?branch=main)](https://app.travis-ci.com/guligo/color-store)
+[![Coverage Status](https://coveralls.io/repos/github/guligo/color-store/badge.svg?branch=main)](https://coveralls.io/github/guligo/color-store?branch=main)
+
 # Color Store
 
 ## About
 
 The Color Store dapp is a market place for buying, selling and exchanging NFTs that represent different colors. This
-repo consists of front-end in JS + React, back-end and proxy in Java + Spring Boot, and Solidity smart contracts for
-Ethereum blockchain. Requires MetaMask wallet to interact with it.
+repo consists of front-end in JS + React, back-end in Java + Spring Boot, and Solidity smart contracts for Ethereum
+blockchain. Requires MetaMask wallet to interact with it.
 
 This is just a playground project with the purpose of learning more about smart contract development.
 
@@ -17,6 +20,10 @@ This is just a playground project with the purpose of learning more about smart 
 - [Ganache](https://trufflesuite.com/ganache/) for deployment of smart contracts onto personal Ethereum blockchain
 
 - [Node.js](https://nodejs.org/), [Maven](https://maven.apache.org/) and [Truffle](https://trufflesuite.com/truffle/)
+
+### Architecture
+
+<img src="res/arch-diagram-1-landscape.png" width="100%" />
 
 ### Commands
 
@@ -33,9 +40,12 @@ configuration files:
 
 In order to run the project:
 
-1. Start Ganache node on `http://0.0.0.0:8545`
+1. Start PostgreSQL:<br />
+   `docker run --name color-store-postgres -e POSTGRES_DB=color-store -e POSTGRES_PASSWORD=secret -d -p 5433:5432 postgres`
 
-2. Build, test and deploy Solidity smart contracts project:
+2. Start Ganache node on `http://0.0.0.0:8545`
+
+3. Build, test and deploy Solidity smart contracts project:
     ```
     (cd color-store-contract \
         && truffle test \
@@ -43,16 +53,16 @@ In order to run the project:
         && cp build/contracts/* ../color-store-fe/src/contracts)
     ```
 
-3. Build and run Spring Boot back-end project:<br />
+4. Build and run Spring Boot back-end project (run both commands in different shell):<br />
     ```
-    (cd color-store-be && mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8081")
-    (cd color-store-be && mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8082")
+    (cd color-store-be && mvn flyway:clean flyway:migrate spring-boot:run -Dspring-boot.run.arguments="--server.port=8081")
+    (cd color-store-be && mvn flyway:clean flyway:migrate spring-boot:run -Dspring-boot.run.arguments="--server.port=8082")
     ```
 
-4. Run Zuul reverse proxy:<br />
+5. Run Zuul reverse proxy (run in different shell):<br />
    `(cd color-store-proxy && mvn spring-boot:run)`
 
-5. Build and run React front-end project (run in different shell):<br />
+6. Build and run React front-end project (run in different shell):<br />
    `(cd color-store-fe && npm start)`
 
 ### Useful Links
@@ -77,10 +87,10 @@ In order to run the project:
 
 ## Screenshots
 
-- Asset list:<br /><img src="screenshot-1.png" width="640" />
+- Asset list:<br /><img src="res/screenshot-1.png" width="640" />
 
-- Owned asset view:<br /><img src="screenshot-2.png" width="640" />
+- Owned asset view:<br /><img src="res/screenshot-2.png" width="640" />
 
-- Owned asset list in MetaMask:<br /><img src="screenshot-3.png" width="320" />
+- Owned asset list in MetaMask:<br /><img src="res/screenshot-3.png" width="320" />
 
-- Owned asset view in MetaMask:<br /><img src="screenshot-4.png" width="320" />
+- Owned asset view in MetaMask:<br /><img src="res/screenshot-4.png" width="320" />

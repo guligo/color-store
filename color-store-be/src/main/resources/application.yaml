@@ -1,7 +1,13 @@
+server.error.include-stacktrace: never
+
 spring:
   application.name: color-store-be
   profiles.active: dev
   devtools.restart.enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5433/color-store
+    username: postgres
+    password: secret
 
 blockchain:
   node.address: "http://127.0.0.1:8545" # address of Ganache personal blockchain; the term "node" provides more flexibility in case this system moves to live ETH blockchain

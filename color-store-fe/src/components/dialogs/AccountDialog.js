@@ -11,35 +11,49 @@ export default function AccountDialog(props) {
 
   const [user, setUser] = React.useState(null);
 
-  React.useEffect(() => {
-    async function fetchData() {
-      if (DappHelper.isMetaMaskInstalled()) {
-        console.log('MetaMask is installed');
-        const account = await DappHelper.getFirstActiveMetaMaskAccount();
-        console.log('First active MetaMask account:', account);
+  const [error, setError] = React.useState(null);
 
-        if (account) {
-          const user = await ApiHelper.getUser(account);
-          setUser(user);
-        }
-      }
-    }
+  React.useEffect(() => {
     fetchData();
   }, []);
 
-  const handleSave = async () => {
-    await ApiHelper.updateUser(user);
-    props.onClose();
+  const fetchData = async () => {
+    if (DappHelper.isMetaMaskInstalled()) {
+      console.log('MetaMask is installed');
+      const account = await DappHelper.getFirstActiveMetaMaskAccount();
+      console.log('First active MetaMask account:', account);
+
+      if (account) {
+        const user = await ApiHelper.getUser(account);
+        setUser(user);
+      }
+    }
   };
 
   const setAlias = (event) => {
     user.alias = event.target.value;
   };
 
+  const handleSave = async () => {
+    try {
+      setError(null);
+      await ApiHelper.updateUser(user);
+      props.onClose();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleClose = async () => {
+    props.onClose();
+    setError(null);
+    fetchData();
+  };
+
   return (
     <Dialog
       open={ props.open }
-      onClose={ props.onClose }
+      onClose={ handleClose }
       fullWidth
       maxWidth="sm"
     >
@@ -49,11 +63,13 @@ export default function AccountDialog(props) {
           defaultValue={ user?.alias }
           onChange={ setAlias }
           inputProps={{ maxLength: 15 }}
+          error={ error != null }
+          helperText={ error }
           fullWidth />
       </DialogContent>
       <DialogActions>
         <Button onClick={ handleSave }>Save</Button>
-        <Button onClick={ props.onClose }>Close</Button>
+        <Button onClick={ handleClose }>Close</Button>
       </DialogActions>
     </Dialog>
   );

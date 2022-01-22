@@ -1,10 +1,14 @@
 package me.guligo.cs.dtos.external;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MetadataDto {
 
     @lombok.NonNull

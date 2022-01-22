@@ -1,6 +1,8 @@
-package me.guligo.cs.dtos;
+package me.guligo.cs.entities;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,13 +13,15 @@ import org.hibernate.validator.constraints.Length;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+@Entity(name = "users")
+public class User {
 
-    @lombok.NonNull
-    @NotNull
+    @Id
+    @Column(name = "id")
     private String id;
 
     @Length(max = 25)
+    @Column(name = "alias")
     private String alias;
 
 }
